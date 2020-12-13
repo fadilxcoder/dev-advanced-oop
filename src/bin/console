@@ -17,7 +17,7 @@
 			$methodName = $commands[$value];
 			$dataFixtures->{ $methodName }();
 		} else {
-			echo 'Command "'.$value.'" was not found ! ' . "\n\r";
+			echo 'Command ' . $value . ' was not found ! ' . "\n\r";
 		}
 
 	}
