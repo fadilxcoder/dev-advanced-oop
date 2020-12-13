@@ -4,6 +4,9 @@
 
 - https://packagist.org/packages/vlucas/phpdotenv
 - https://packagist.org/packages/josantonius/session
+- https://packagist.org/packages/ramsey/uuid
+- https://packagist.org/packages/symfony/http-foundation
+- https://packagist.org/packages/catfan/medoo
 
 ### Required --dev
 

@@ -1,0 +1,24 @@
+#!/usr/bin/php
+<?php 
+	# Vendor
+	require dirname(__DIR__).'/vendor/autoload.php';
+	Dotenv\Dotenv::createImmutable(dirname(__DIR__))->load();
+	$dataFixtures = new Codebase\Fixtures\DataFixtures();
+	
+	$commands = [
+		'database:init'	=> 'init'
+	];
+
+	array_shift($argv);
+	
+	foreach ($argv as $key => $value) {
+
+		if (array_key_exists($value, $commands)) {
+			$methodName = $commands[$value];
+			$dataFixtures->{ $methodName }();
+		} else {
+			echo 'Command "'.$value.'" was not found ! ' . "\n\r";
+		}
+
+	}
+?>

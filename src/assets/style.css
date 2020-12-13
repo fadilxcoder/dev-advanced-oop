@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+
+:root {
+    --fontFamily : 'Open Sans', sans-serif;
+}
+
+html,
+body{
+    padding: 0px;
+    margin: 0px;
+}
+
+body{
+    font-family: var(--fontFamily);
+    background-color: #e2e2e2;;
+}
+
+/* LOGIN UI */
+
+main.login-wrapper{
+    width: 400px;
+    margin: 0 auto;
+    margin-top: 150px;
+}
+
+main.login-wrapper form{
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0px 0px 20px 0px #8a8686;
+    border-radius: 5px;
+}
+
+main.login-wrapper fieldset{
+    border: 1px solid #a7a0a0;
+    padding-left: 15px;
+}
+
+main.login-wrapper input[type="text"]{
+    margin-top: 10px;
+}
+
+main.login-wrapper input[type="password"]{
+    margin: 5px 0px;
+}
+
+main.login-wrapper input[type="text"],
+main.login-wrapper input[type="password"]{
+    border: 1px solid #a7a0a0;
+    padding: 5px;
+    width: 250px;
+}
+
+main.login-wrapper input[type="submit"]{
+    float: right;
+    margin: 15px 10px 10px 0px;
+    background: #000;
+    color: #FFF;
+    border: none;
+    padding: 5px 10px;
+    font-size: 15px;
+    border-radius: 5px;
+    outline: none;
+    font-family: var(--fontFamily);
+    font-weight: bold;
+}
+
+/* DASHBOARD UI */
+
+header.dashboard-nav{
+    background-color: #000;
+    color: #FFF;
+}
+
+header.dashboard-nav ul{
+    margin: 0px 0px 0px 5px;
+    padding: 0px;
+    height: 35px;
+}
+
+header.dashboard-nav ul li{
+    display: inline-block;
+    padding: 5px 10px;
+    border-right: 1px solid white;
+    height: 25px;
+}
+
+header.dashboard-nav ul li:last-child{
+    border: none;
+}
+
+header.dashboard-nav ul li a{
+    color: #FFF;
+    text-decoration: none;
+
+}
+
+main.dashboard-wrapper #clickblock{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+
+main.dashboard-wrapper #clickblock a{
+    text-decoration: underline;
+}
+
+.alert-danger{
+    color: #721c24;
+    position: relative;
+    font-size: 14px;
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+    main.login-wrapper{
+        width: calc(100% - 30px);
+        padding: 0px 15px;
+    }
+
+    main.login-wrapper input[type="text"], 
+    main.login-wrapper input[type="password"]{
+        width: calc(100% - 10px);
+    }
+
+    main.login-wrapper fieldset{
+        padding-left: revert;
+    }
+
+    main.login-wrapper input[type="submit"]{
+        float: none;
+        width: 100%;
+    }
+    
+    header.dashboard-nav ul{
+        height: 120px;
+    }
+
+    header.dashboard-nav ul li{
+        font-size: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+    }
+    
+    main.dashboard-wrapper #clickblock{
+        padding: 0px 15px;
+        height: 50vh;
+        text-align: center;
+    }
+}
