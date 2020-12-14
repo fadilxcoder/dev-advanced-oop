@@ -2,8 +2,8 @@
 
 <header class="dashboard-nav">
     <ul>
-        <li><a href="/index.php">Accueil</a></li>
-        <li><a href="/index.php?action=logout">Déconnexion</a></li>
+        <li><a href="/">Accueil</a></li>
+        <li><a href="?action=logout">Déconnexion</a></li>
     </ul>
 </header>
 <main class="dashboard-wrapper">

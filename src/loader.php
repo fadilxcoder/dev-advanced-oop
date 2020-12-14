@@ -1,4 +1,6 @@
-<?php 
+<?php
+
+// DECLARATION
 
 declare(strict_types=1);
 
@@ -15,43 +17,62 @@ use Dotenv\Dotenv;
 use Tracy\Debugger;
 use Faker\Factory;
 use Josantonius\Session\Session;
-use Codebase\Test;
-
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\Exception\UnsatisfiedDependencyException;
-
 use Symfony\Component\HttpFoundation\Request;
-
 use Codebase\Managers\ViewManager;
 use Codebase\Services\UserManagementService;
 
 
 // INIT
 
-Dotenv::createImmutable(__DIR__)->load();       // Load .env variables
-
+Dotenv::createImmutable(__DIR__)->load();       // Load .env variables, accessible by `$_ENV`
 Debugger::enable(Debugger::DEVELOPMENT);        // Tracy debugger
-
 $faker = Factory::create();                     // Faker generator
-
-Session::setPrefix('app_');                     // Session
-Session::init();
-
+Session::setPrefix('app_');                     // Session prefix
+Session::init();                                // Session start
 $request = Request::createFromGlobals();        // HttpFoundation request (Symfony)
+
+// OBJECTS
+
+$view = new ViewManager('views', 'base.php');
+$userServices = new UserManagementService();
+
+// route to page
+
+$render = [];
+$url = str_replace('/', '', $_GET['url']);
+foreach ($routes as $key => $value) {
+    if ($key === $url) {
+        $page = $value;
+    }
+}
+
+if (!isset($page)) {
+    $render['HTML'] = '404.php';
+    $render['parametersArray'] = [
+        'errors' => 'Page not found !',
+    ];
+} else {
+    $render['HTML'] = $page;
+    $render['parametersArray'] = [];
+}
+
+$excludedRoutes = [
+    'login',
+    'register',
+];
+
+if (null === Session::get("id_user") && !in_array($url, $excludedRoutes)) {
+    header('Location: /login');
+}
+
+if (null !== Session::get("id_user") && in_array($url, $excludedRoutes)) {
+    header('Location: /dashboard');
+}
 
 
 // EXEC
-
-// dump($_ENV);
-
-$test = new Test();
-
-Session::set("id_user", 'xyz');
-// dump(Session::get("id_user"));
-// dump(Session::pull("id_user"));
-// dump(Session::id());
-// $data = 'dev...';
-
 /*
 try {
  
@@ -76,29 +97,35 @@ try {
 }
 */
 
-// dump($request);
-$url = str_replace('/', '', $_GET['url']);
-// dump($url);
-// dump($routes);
-foreach ($routes as $key => $value) {
-    if ($key === $url) {
-        $page = $value;
 
+if ($request->request->has('login_process')) {
+    if ($request->request->has('username') && $request->request->has('password')) {
+        $uname = $request->request->get('username');
+        $passwd = $request->request->get('password');
+        $user = $userServices->getUserByUsernameAndPassword(htmlentities($uname), htmlentities($passwd));
+        
+        if (null !== $user) {
+            Session::set("id_user", $user['id_user']);
+            Session::set("un_user", $user['username']);
+            header('Location: /dashboard');
+        } else {
+            $render['HTML'] = 'login.php';
+            $render['parametersArray'] = [
+                'errors' => 'Invalid Username / Password',
+            ];
+        }
+    } else {
+        $render['HTML'] = 'login.php';
+        $render['parametersArray'] = [
+            'errors' => 'One or more fields missing.',
+        ];
     }
 }
 
-// dump($routes);
-
-
-
-$view = new ViewManager('views', 'base.php');
-
-echo $view->render($page,[]);
-
-$userServices = new UserManagementService();
-// dump($view);
-// echo $view->render('login.php',['errors'=>'']);
-// echo $view->render('main.php',['errors'=>'']);
+if ($request->query->get('action') && $request->query->get('action') == 'logout') {
+    Session::destroy(Session::getPrefix(), true);
+    header('Location: /');
+}
 
 /*
 if ($request->query->has('action') && $request->query->get('action') == 'login') {
@@ -139,5 +166,9 @@ if ($request->query->has('action') && $request->query->get('action') == 'login')
 	echo $view->render('login.php', []);
 }
 */
+
+// DISPLAYING THE RENDERED VIEW
+
+echo $view->render($render['HTML'], $render['parametersArray']);
 ?>
 

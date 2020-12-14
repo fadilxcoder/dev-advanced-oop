@@ -1,7 +1,7 @@
 <?php $data = $this->getParams(); ?>
 
 <main class="login-wrapper">
-    <h1>LOGIN</h1>
+    <h1>REGISTER</h1>
     <form method="post" action="">
         <fieldset>
             <?php if (isset($data['errors'])) : ?>

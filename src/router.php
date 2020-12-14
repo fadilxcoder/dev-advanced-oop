@@ -1,7 +1,8 @@
 <?php
 
 $routes = [
-    'index' => 'login.php',
+    'register' => 'register.php',
+    'login' => 'login.php',
     'dashboard' => 'main.php',
-    'logout' => 'logout.php',
+    '404' => '404.php',
 ];
