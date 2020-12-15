@@ -36,7 +36,7 @@ main.login-wrapper form{
 
 main.login-wrapper fieldset{
     border: 1px solid #a7a0a0;
-    padding-left: 15px;
+    padding: 10px;
 }
 
 main.login-wrapper input[type="text"]{
@@ -51,21 +51,37 @@ main.login-wrapper input[type="text"],
 main.login-wrapper input[type="password"]{
     border: 1px solid #a7a0a0;
     padding: 5px;
-    width: 250px;
+    width: calc(100% - 10px);
 }
 
 main.login-wrapper input[type="submit"]{
-    float: right;
-    margin: 15px 10px 10px 0px;
+    margin: 5px 0px;
     background: #000;
     color: #FFF;
     border: none;
-    padding: 5px 10px;
+    padding: 10px;
     font-size: 15px;
     border-radius: 5px;
     outline: none;
     font-family: var(--fontFamily);
     font-weight: bold;
+    width: 100%;
+}
+
+main .change-url{
+    margin: 0px;
+    text-align: center;
+    font-size: 12px;
+    padding-top: 5px;
+}
+
+main .change-url a{
+    color: #000;
+    text-decoration: none;
+}
+
+main .change-url a:hover{
+    color: red;
 }
 
 /* DASHBOARD UI */
@@ -115,6 +131,16 @@ main.dashboard-wrapper #clickblock a{
     position: relative;
     padding: 10px;
     border: 1px solid #f5c6cb;
+    border-radius: .25rem;
+    font-size: 14px;
+}
+
+.alert-success{
+    color: #155724;
+    background-color: #d4edda;
+    position: relative;
+    padding: 10px;
+    border: 1px solid #c3e6cb;
     border-radius: .25rem;
     font-size: 14px;
 }

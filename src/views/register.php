@@ -9,7 +9,10 @@
             <?php endif; ?>
             <input type="text" name="username" id="username" placeholder="utilisateur" required/>
             <input type="password" name="password" id="password" placeholder="mot de passe" required/>
-            <input type="submit" id="submit" name="login_process" value="Connexion" />
+            <input type="submit" id="submit" name="register_process" value="Register" />
+            <p class="change-url">
+                <a href="/login">login</a>
+            </p>
         </fieldset>
     </form>
 </main>

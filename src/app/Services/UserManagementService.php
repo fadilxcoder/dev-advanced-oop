@@ -3,16 +3,19 @@
 namespace Codebase\Services;
 
 use Codebase\Managers\DbManager;
+use Ramsey\Uuid\Uuid;
 
 class UserManagementService
 {
-    public function encryptUserPassword(String $password) {
+    public function encryptUserPassword(String $password) 
+    {
         $encryptPassword = hash('sha512', $password);
         
         return $encryptPassword;
     }
 
-    public function getUserByUsernameAndPassword(String $username, String $password) {
+    public function getUserByUsernameAndPassword(String $username, String $password) 
+    {
         $encryptPassword = $this->encryptUserPassword($password);
         $user = DbManager::getInstance()->select('user', '*', [
                 'username'  => $username,
@@ -24,7 +27,7 @@ class UserManagementService
         return ($user && null !== $user && count($user) === 1) ? $user[0] : null;
     }
 
-    public function getGroupByUser(int $userId){
+    public function getGroupByUser(int $userId) {
         $groups = DbManager::getInstance()->select('user_group', '*', [
                 'id_user'  => $userId
             ]
@@ -33,7 +36,8 @@ class UserManagementService
         return $groups;
     }
 
-    public function isUserInGroup(int $userId, int $groupId){
+    public function isUserInGroup(int $userId, int $groupId)
+     {
         $groups = DbManager::getInstance()->select('user_group', '*', [
                 'id_user'  => $userId,
                 'id_group' => $groupId
@@ -43,7 +47,8 @@ class UserManagementService
         return count($groups) > 0;
     }
 
-    public function updateLastLogin(int $userId){
+    public function updateLastLogin(int $userId) 
+    {
         $update = DbManager::getInstance()->update('user',
             [
                 'last_login' => (new \DateTime("now"))->format("Y-m-d H:i:s")
@@ -54,5 +59,18 @@ class UserManagementService
         );
         
         return $update->rowCount() === 1;
+    }
+
+    public function insertUser($username, $password)
+    {
+        $encryptPassword = $this->encryptUserPassword($password);
+        $uuid = Uuid::uuid4();
+        $ins = DbManager::getInstance()->insert('user', [
+            'username'  => $username,
+            'password'  => $encryptPassword,
+            'uuid' => $uuid->toString()
+        ]);
+
+        return $ins->rowCount();
     }
 }

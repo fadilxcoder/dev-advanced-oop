@@ -4,6 +4,7 @@ namespace Codebase\Fixtures;
 
 use Codebase\Managers\DbManager;
 use Codebase\Services\UserManagementService;
+use Ramsey\Uuid\Uuid;
 
 class DataFixtures
 {
@@ -41,6 +42,10 @@ class DataFixtures
                     "NOT NULL",
                     "AUTO_INCREMENT",
                     "PRIMARY KEY"
+                ],
+                "uuid" => [
+                    "VARCHAR(255)",
+                    "NOT NULL"
                 ],
                 "username" => [
                     "VARCHAR(45)",
@@ -98,18 +103,21 @@ class DataFixtures
             ->insert("user", [
                 [
                     "id_user" => 1,
+                    "uuid" => Uuid::uuid4()->toString(),
                     "username" => "fadilxcoder",
                     "password" => $userMgmt->encryptUserPassword("admin"),
                     "last_login" => "2011-09-28 12:00:00"
                 ],
                 [
                     "id_user" => 2,
+                    "uuid" => Uuid::uuid4()->toString(),
                     "username" => "bocasay",
                     "password" => $userMgmt->encryptUserPassword("bocasay"),
                     "last_login" => "2011-09-28 12:00:00"
                 ],
                 [
                     "id_user" => 3,
+                    "uuid" => Uuid::uuid4()->toString(),
                     "username" => "johndoe",
                     "password" => $userMgmt->encryptUserPassword("admin"),
                     "last_login" => "2011-09-28 12:00:00"
